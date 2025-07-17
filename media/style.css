@@ -2,11 +2,11 @@ body {
     margin: 0;
     font-family: "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
     background: #fff;
-    color: #222;
+    color: #1e1e23;
 }
 
 .topbar {
-    background: #3563b6;
+    background: #3f63bf;
     height: 48px;
     display: flex;
     align-items: center;
@@ -43,6 +43,11 @@ body {
     font-size: 22px;
     font-weight: bold;
     margin-right: 24px;
+}
+.logo strong {
+    font-weight: 900;
+    font-size: 26px;
+    letter-spacing: 1px;
 }
 
 .topbar-menu {
@@ -122,8 +127,8 @@ body {
 .nav-inner a {
     color: #222;
     text-decoration: none;
-    margin: 0 14px;
-    font-size: 14px;
+    padding: 0 14px;
+    font-size: 16px;
     font-weight: 700;
     padding-bottom: 2px;
     border-bottom: 2px solid transparent;
@@ -353,7 +358,7 @@ body {
 
 .news-summary {
     font-size: 13px;
-    color: #333;
+    color: #767678;
     margin-bottom: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -795,11 +800,11 @@ body {
     .topbar-inner, .nav-inner, .date-bar-inner, .main-flex {
         width: 100%;
         min-width: 0;
-        max-width: 100vw;
+        max-width: 96vw;
     }
     .main-flex {
         min-width: 0;
-        max-width: 100vw;
+        max-width: 96vw;
     }
 }
 @media (max-width: 900px) {
