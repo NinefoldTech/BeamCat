@@ -1,0 +1,100 @@
+/* styles.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* 防止滚动 */
+}
+
+#myCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+#myInput {
+    position: absolute;
+    top: 100px;
+    left: 100px;
+}
+#overlayDiv {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(255, 205, 255, 0.5); /* 半透明白色背景 */
+    color: black; /* 文字颜色 */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 居中显示 */
+    opacity: 0.5; /* 设置透明度 */
+}
+.control {
+    position: absolute;
+    top:  10%;
+    left: 40%;
+}
+#startAndStop{
+    width: 80px;
+    height: 80px;
+}
+.contro3 {
+    position: absolute;
+    top:  50%;
+    left: 50%;
+}
+.output2{
+    position: fixed;
+    bottom: 10px; /* 距离底部的距离 */
+    right: 10px; /* 距离右边的距离 */
+    width: 200px; /* 宽度 */
+    height: 150px; /* 高度 */
+    background-color: lightblue; /* 背景颜色 */
+}
+#myIframe{
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    width: 30%;
+    height: 50%;
+    z-index: 16;
+}
+#containe{
+    position: absolute;
+    top: 200px;
+    left: 300px;
+    width: 570px;
+    height: 200px;
+    z-index: 17;
+}
+dt{
+    width: 90px;
+    height: 90px;
+    background-color: lightblue;
+    border-radius: 20px;
+    margin: 10px;
+    margin-left: 40px;
+}
+dl{
+    float: left;
+}
+.yellow{
+    background-color: lightgoldenrodyellow;
+}
+.blue{
+    background-color: lightblue;
+}
+#mCircle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 5px solid #007AFF;  /* 添加红色边框 */
+    background-color: transparent;  /* 背景透明 */
+    border-radius: 50%;
+    z-index: 20;
+}
+#mCircle.clicking {
+  transform: scale(0.8);
+}
