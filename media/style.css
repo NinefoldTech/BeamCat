@@ -22,6 +22,7 @@ body {
     justify-content: space-between;
     position: relative;
 }
+
 .topbar-start-btn {
     background: #fff;
     color: #3563b6;
@@ -192,7 +193,7 @@ body {
     min-width: 160px;
     max-width: 160px;
     flex: 0 0 140px;
-    padding: 24px 16px 0 24px;
+    padding: 16px 16px 0 0;
     border-right: 1px solid #e3e6ef;
     transition: opacity 0.2s;
 }
@@ -604,7 +605,7 @@ body {
     color: #fff;
     border: none;
     border-radius: 20px;
-    padding: 7px 22px;
+    padding: 7px 42px;
     font-size: 15px;
     cursor: pointer;
     transition: background 0.2s;
@@ -794,6 +795,30 @@ body {
     max-width: 1080px;
     margin-left: auto;
     margin-right: auto;
+}
+
+#mCircle {
+    position: absolute;
+    top:100px;
+    width: 8px;
+    height: 8px;
+    border: 5px solid #007AFF;  /* 添加红色边框 */
+    background-color: transparent;  /* 背景透明 */
+    border-radius: 50%;
+    z-index: 20;
+}
+#mCircle.clicking {
+    transform: scale(0.8);
+}
+#startAndStop:hover {
+    background: #3354a3 !important;
+    color: #e3e6ef !important;
+    transition: background 0.2s, color 0.2s;
+}
+#startAndStop:active {
+    background: #29468b !important;
+    color: #c7d2ee !important;
+    transition: background 0.1s, color 0.1s;
 }
 
 @media (max-width: 1300px) {

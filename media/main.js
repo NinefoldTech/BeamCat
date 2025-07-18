@@ -117,7 +117,7 @@ const newsData = {
             press: '뉴스1',
             comment: 48,
             image: 'https://picsum.photos/600/320?random=103',
-            content: '김영훈 고용노동부 장관 후보자 인사청문회가 열린 16일 과거 방북 전력이 있는 김 후보자의 ‘주적’ 논란이 불거지며 청문회가 파행됐다.'
+            content: '김영훈 고용노동부 장관 후보자 인사청문회가 열린 16일 과거 방북 전력이 있는 김 후보자의 주적 논란이 불거지며 청문회가 파행됐다.'
         },
         {
             id: 'pol5',
@@ -668,14 +668,57 @@ function renderNews(newsArr) {
 
 // 单页：渲染详情页
 function showDetail(detail) {
+    // 判断是否为汇率详情（通过title包含'환율 상세'）
+    if (detail.title && detail.title.includes('환율 상세')) {
+        const mainContent = document.getElementById('main-content');
+        // 解析币种、现价、涨跌、涨跌幅、时间
+        let fxName = detail.title.replace(' 환율 상세', '');
+        let fxPrice = detail.summary.match(/([0-9,.]+)원/)? detail.summary.match(/([0-9,.]+)원/)[1] : '';
+        let fxChange = '';
+        let fxChangeRate = '';
+        let fxTime = detail.date.replace('입력 ', '').replace('오후', '').replace('오전', '').trim();
+        let isUp = true;
+        // 修正content中单引号为英文单引号，避免语法错误
+        let safeContent = (detail.content || '').replace(/[‘’‛‚`]/g, "'");
+        let match = safeContent.match(/([+-][0-9,.]+)[^0-9]+([+-]?[0-9,.]+%)/);
+        if(match){
+            fxChange = match[1];
+            fxChangeRate = match[2];
+            isUp = fxChange.startsWith('+');
+        }
+        // 颜色
+        let color = isUp ? '#d32f2f' : '#1976d2';
+        let arrow = isUp ? '▲' : '▼';
+        // 布局
+        mainContent.innerHTML = `
+        <div style="max-width:820px;margin:48px auto 0 auto;padding:32px 32px 28px 32px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);text-align:left;">
+            <img src="media/hlxq.png" alt="환율详情" style="width:100%;border-radius:6px;margin-bottom:18px;" />
+            <div style="font-size:19px;font-weight:700;margin-bottom:6px;">${fxName}</div>
+            <div style="font-size:38px;font-weight:900;letter-spacing:1px;line-height:1.1;">${fxPrice}</div>
+            <div style="font-size:18px;margin:10px 0 0 0;">
+                <span style="color:${color};font-weight:700;font-size:18px;">${arrow} ${Math.abs(Number(fxChange))} <span style='margin-left:6px;'>${fxChangeRate}</span></span>
+            </div>
+            <div style="color:#888;font-size:15px;margin:14px 0 0 0;display:flex;align-items:center;gap:8px;">
+                <span>${fxTime}</span>
+                <span style="display:inline-block;width:7px;height:7px;background:#1ec800;border-radius:50%;margin-right:2px;"></span>
+                <span>실시간</span>
+            </div>
+            <button class="back-btn" id="detail-back-btn" style="margin-top:32px;"><span class="icon">←</span></button>
+        </div>
+        `;
+        // 返回按钮事件
+        const backBtn = document.getElementById('detail-back-btn');
+        if(backBtn) {
+            backBtn.addEventListener('click', function() {
+                showNewsList(detail.category || '정치');
+            });
+        }
+        return;
+    }
     const mainContent = document.getElementById('main-content');
     const tpl = document.getElementById('detail-template');
     mainContent.innerHTML = tpl.innerHTML;
-    // 隐藏左右侧边栏但保留占位
-    const left = document.querySelector('.sidebar-left');
-    const right = document.querySelector('.sidebar-right');
-    if(left) left.classList.add('hide');
-    if(right) right.classList.add('hide');
+    // 保持左右侧边栏可见（不再隐藏）
     // 填充内容
     if(document.getElementById('detail-press'))
         document.getElementById('detail-press').textContent = detail.press || '';
@@ -694,10 +737,10 @@ function showDetail(detail) {
     if(document.getElementById('detail-summary'))
         document.getElementById('detail-summary').textContent = detail.summary || '';
     if(document.getElementById('detail-recommend'))
-        document.getElementById('detail-recommend').textContent = detail.recommend !== undefined ? detail.recommend : '추천';
+        document.getElementById('detail-recommend').textContent = detail.recommend !== undefined ? detail.recommend : '\ucd94\ucc9c';
     if(document.getElementById('detail-press-logo'))
         document.getElementById('detail-press-logo').src = detail.logo || 'media/logo.png';
-    // 返回按钮
+    // 返回按钮事件
     const backBtn = document.getElementById('detail-back-btn');
     if(backBtn) {
         backBtn.addEventListener('click', function() {
@@ -776,11 +819,11 @@ function showStockDetail(stock) {
     if(left) left.classList.add('hide');
     if(right) right.classList.add('hide');
     // 各股票专属详情
+    let stockHtml = '';
     if(stock.name === '삼성전자') {
-        mainContent.innerHTML = `
+        stockHtml = `
         <div class="stock-detail-wrap">
             <div class="stock-detail-header">
-                <button class="detail-back-btn" id="stock-detail-back-btn" title="返回"><span class="icon">←</span></button>
                 <span class="stock-detail-title">삼성전자 <span class="stock-detail-code">005930</span></span>
                 <span class="stock-detail-date">2025.07.16 기준 (KRX 장마감)</span>
             </div>
@@ -822,13 +865,13 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">10.51배 <span class="stock-detail-per-up">+0.76%</span></div>
                 </div>
             </div>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">←</span></button>
         </div>
         `;
     } else if(stock.name === 'LG화학') {
-        mainContent.innerHTML = `
+        stockHtml = `
         <div class="stock-detail-wrap">
             <div class="stock-detail-header">
-                <button class="detail-back-btn" id="stock-detail-back-btn" title="返回"><span class="icon">←</span></button>
                 <span class="stock-detail-title">LG화학 <span class="stock-detail-code">051910</span></span>
                 <span class="stock-detail-date">2025.07.16 기준 (KRX 장마감)</span>
             </div>
@@ -870,13 +913,13 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">15.23배 <span class="stock-detail-per-up">-0.12%</span></div>
                 </div>
             </div>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">←</span></button>
         </div>
         `;
     } else if(stock.name === '카카오') {
-        mainContent.innerHTML = `
+        stockHtml = `
         <div class="stock-detail-wrap">
             <div class="stock-detail-header">
-                <button class="detail-back-btn" id="stock-detail-back-btn" title="返回"><span class="icon">←</span></button>
                 <span class="stock-detail-title">카카오 <span class="stock-detail-code">035720</span></span>
                 <span class="stock-detail-date">2025.07.16 기준 (KRX 장마감)</span>
             </div>
@@ -918,14 +961,13 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">22.10배 <span class="stock-detail-per-up">+0.21%</span></div>
                 </div>
             </div>
-            
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">←</span></button>
         </div>
         `;
     } else if(stock.name === '현대차') {
-        mainContent.innerHTML = `
+        stockHtml = `
         <div class="stock-detail-wrap">
             <div class="stock-detail-header">
-                <button class="detail-back-btn" id="stock-detail-back-btn" title="返回"><span class="icon">←</span></button>
                 <span class="stock-detail-title">현대차 <span class="stock-detail-code">005380</span></span>
                 <span class="stock-detail-date">2025.07.16 기준 (KRX 장마감)</span>
             </div>
@@ -967,12 +1009,13 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">8.90배 <span class="stock-detail-per-up">+0.10%</span></div>
                 </div>
             </div>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">←</span> </button>
+        </div>
         `;
     } else if(stock.name === 'SK하이닉스') {
-        mainContent.innerHTML = `
+        stockHtml = `
         <div class="stock-detail-wrap">
             <div class="stock-detail-header">
-                <button class="detail-back-btn" id="stock-detail-back-btn" title="返回"><span class="icon">←</span></button>
                 <span class="stock-detail-title">SK하이닉스 <span class="stock-detail-code">000660</span></span>
                 <span class="stock-detail-date">2025.07.16 기준 (KRX 장마감)</span>
             </div>
@@ -1014,19 +1057,19 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">10.51배 <span class="stock-detail-per-up">+0.76%</span></div>
                 </div>
             </div>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">←</span></button>
         </div>
         `;
     } else {
-        mainContent.innerHTML = `<div style='padding:40px;font-size:20px;'>해당 종목의 상세 정보는 준비 중입니다.</div>`;
+        stockHtml = `<div style='padding:40px;font-size:20px;'>해당 종목의 상세 정보는 준비 중입니다.</div>`;
     }
-    // 返回按钮
+    mainContent.innerHTML = stockHtml;
+    // 返回按钮事件
     const backBtn = document.getElementById('stock-detail-back-btn');
     if(backBtn) {
         backBtn.addEventListener('click', function() {
-            // 恢复左右侧边栏可见
             if(left) left.classList.remove('hide');
             if(right) right.classList.remove('hide');
-            // 回到默认新闻列表
             showNewsList('정치');
         });
     }
@@ -1066,28 +1109,98 @@ function showStockDetail(stock) {
 
 // 右侧"最常浏览新闻"详情页支持
 function setupMostViewedDetail() {
+    // 右侧6条新闻的详情数据
+    const mostViewedDetails = [
+        {
+            press: 'Y 뉴스',
+            title: '"부동산 대책 발표"...전문가 의견은?',
+            date: '입력 2025.07.16. 오후 12:22',
+            modified: '수정 2025.07.16. 오후 12:23',
+            writer: '김기자',
+            image: 'https://picsum.photos/600/320?random=200',
+            comment: 12,
+            recommend: 5,
+            summary: '정부가 발표한 부동산 대책에 대해 전문가들은 다양한 의견을 내놓고 있습니다.',
+            content: '정부는 최근 부동산 시장 안정을 위한 대책을 발표했습니다. 이에 대해 전문가들은 정책의 실효성과 시장에 미칠 영향에 대해 다양한 분석을 내놓고 있습니다.',
+            logo: 'media/logo.png',
+            category: ''
+        },
+        {
+            press: 'Y 뉴스',
+            title: '폭우 피해 복구 현장…정부 지원은?',
+            date: '입력 2025.07.16. 오후 13:10',
+            modified: '수정 2025.07.16. 오후 13:15',
+            writer: '이기자',
+            image: 'https://picsum.photos/600/320?random=201',
+            comment: 8,
+            recommend: 2,
+            summary: '폭우로 인한 피해 복구 현장에서 정부의 지원이 이어지고 있습니다.',
+            content: '최근 내린 폭우로 인해 전국 곳곳에서 피해가 발생했습니다. 정부는 신속한 복구와 지원을 약속하며 현장 점검에 나섰습니다.',
+            logo: 'media/logo.png',
+            category: ''
+        },
+        {
+            press: 'Y 뉴스',
+            title: '주식시장 급락, 원인은?',
+            date: '입력 2025.07.16. 오후 14:00',
+            modified: '수정 2025.07.16. 오후 14:05',
+            writer: '박기자',
+            image: 'https://picsum.photos/600/320?random=202',
+            comment: 20,
+            recommend: 7,
+            summary: '주식시장이 급락한 배경에는 여러 가지 요인이 있습니다.',
+            content: '최근 주식시장이 큰 폭으로 하락했습니다. 전문가들은 글로벌 경제 불확실성과 금리 인상, 지정학적 리스크 등을 주요 원인으로 꼽고 있습니다.',
+            logo: 'media/logo.png',
+            category: ''
+        },
+        {
+            press: 'Y 뉴스',
+            title: '대통령, 해외 순방 일정 발표',
+            date: '입력 2025.07.16. 오후 15:00',
+            modified: '수정 2025.07.16. 오후 15:10',
+            writer: '최기자',
+            image: 'https://picsum.photos/600/320?random=203',
+            comment: 5,
+            recommend: 1,
+            summary: '대통령이 다음 주 해외 순방 일정을 공식 발표했습니다.',
+            content: '대통령실은 다음 주 대통령의 해외 순방 일정을 발표하며, 주요 방문국과 일정, 기대 효과를 설명했습니다.',
+            logo: 'media/logo.png',
+            category: ''
+        },
+        {
+            press: 'Y 뉴스',
+            title: 'AI 신기술, 우리의 미래는?',
+            date: '입력 2025.07.16. 오후 16:00',
+            modified: '수정 2025.07.16. 오후 16:10',
+            writer: '정기자',
+            image: 'https://picsum.photos/600/320?random=204',
+            comment: 18,
+            recommend: 9,
+            summary: 'AI 신기술이 우리의 미래를 어떻게 바꿀지 주목받고 있습니다.',
+            content: '최근 AI 기술의 발전이 가속화되면서 사회 각 분야에 미치는 영향이 커지고 있습니다. 전문가들은 AI가 가져올 변화와 대비책에 대해 논의하고 있습니다.',
+            logo: 'media/logo.png',
+            category: ''
+        },
+        {
+            press: 'Y 뉴스',
+            title: '월드컵 결승, 극적인 승부의 순간',
+            date: '입력 2025.07.16. 오후 17:00',
+            modified: '수정 2025.07.16. 오후 17:10',
+            writer: '홍기자',
+            image: 'https://picsum.photos/600/320?random=205',
+            comment: 30,
+            recommend: 15,
+            summary: '월드컵 결승전에서 극적인 승부가 펼쳐졌습니다.',
+            content: '2025년 월드컵 결승전은 역사에 남을 명승부로 기록됐습니다. 양 팀 모두 최선을 다한 경기 끝에 극적인 결과가 나왔습니다.',
+            logo: 'media/logo.png',
+            category: ''
+        }
+    ];
     const mostViewedList = document.querySelectorAll('.most-viewed-list li');
-    mostViewedList.forEach(li => {
+    mostViewedList.forEach((li, idx) => {
         li.style.cursor = 'pointer';
         li.addEventListener('click', function() {
-            // 获取li内容
-            const img = li.querySelector('img')?.src || 'https://via.placeholder.com/700x350';
-            const title = li.querySelector('span')?.textContent || '';
-            // 构造模拟详情数据
-            const detail = {
-                press: 'Y 뉴스',
-                title: title,
-                date: '입력 2025.07.16. 오후 12:22',
-                modified: '',
-                writer: '',
-                image: img,
-                comment: '',
-                recommend: '',
-                summary: '',
-                content: title,
-                logo: 'media/logo.png',
-                category: ''
-            };
+            const detail = mostViewedDetails[idx];
             showDetail(detail);
             // 隐藏左/右侧边栏
             const left = document.querySelector('.sidebar-left');
@@ -1123,3 +1236,104 @@ function setMostViewedImages() {
     });
 }
 setMostViewedImages();
+
+// 汇率详情数据
+const fxDetails = [
+    {
+        press: 'Y 뉴스',
+        title: 'USD/KRW 환율 상세',
+        date: '입력 2025.07.16. 오후 18:00',
+        modified: '수정 2025.07.16. 오후 18:05',
+        writer: '환율팀',
+        image: 'https://picsum.photos/600/320?random=210',
+        comment: 10,
+        recommend: 3,
+        summary: '미국 달러 대비 원화 환율이 1,380.50원으로 상승했습니다.',
+        content: '최근 미국 경제지표 발표와 금리 인상 전망으로 인해 원/달러 환율이 1,380.50원까지 상승했습니다. 전문가들은 단기 변동성 확대에 주목하고 있습니다.',
+        logo: 'media/logo.png',
+        category: ''
+    },
+    {
+        press: 'Y 뉴스',
+        title: 'EUR/KRW 환율 상세',
+        date: '입력 2025.07.16. 오후 18:10',
+        modified: '수정 2025.07.16. 오후 18:15',
+        writer: '환율팀',
+        image: 'https://picsum.photos/600/320?random=211',
+        comment: 7,
+        recommend: 2,
+        summary: '유로화 대비 원화 환율이 1,495.30원으로 하락했습니다.',
+        content: '유럽중앙은행의 정책 변화와 글로벌 경기 둔화 우려로 EUR/KRW 환율이 1,495.30원으로 소폭 하락했습니다.',
+        logo: 'media/logo.png',
+        category: ''
+    },
+    {
+        press: 'Y 뉴스',
+        title: 'JPY/KRW 환율 상세',
+        date: '입력 2025.07.16. 오후 18:20',
+        modified: '수정 2025.07.16. 오후 18:25',
+        writer: '환율팀',
+        image: 'https://picsum.photos/600/320?random=212',
+        comment: 5,
+        recommend: 1,
+        summary: '엔화 대비 원화 환율이 9.85원으로 소폭 상승했습니다.',
+        content: '일본은행의 완화적 통화정책 기조가 이어지면서 JPY/KRW 환율이 9.85원으로 소폭 상승했습니다.',
+        logo: 'media/logo.png',
+        category: ''
+    },
+    {
+        press: 'Y 뉴스',
+        title: 'CNY/KRW 환율 상세',
+        date: '입력 2025.07.16. 오후 18:30',
+        modified: '수정 2025.07.16. 오후 18:35',
+        writer: '환율팀',
+        image: 'https://picsum.photos/600/320?random=213',
+        comment: 6,
+        recommend: 2,
+        summary: '위안화 대비 원화 환율이 190.20원으로 하락했습니다.',
+        content: '중국 경제 성장률 둔화와 무역 이슈로 인해 CNY/KRW 환율이 190.20원으로 하락했습니다.',
+        logo: 'media/logo.png',
+        category: ''
+    },
+    {
+        press: 'Y 뉴스',
+        title: 'GBP/KRW 환율 상세',
+        date: '입력 2025.07.16. 오후 18:40',
+        modified: '수정 2025.07.16. 오후 18:45',
+        writer: '환율팀',
+        image: 'https://picsum.photos/600/320?random=214',
+        comment: 8,
+        recommend: 4,
+        summary: '영국 파운드 대비 원화 환율이 1,750.80원으로 상승했습니다.',
+        content: '영국의 인플레이션 우려와 금리 인상 전망으로 GBP/KRW 환율이 1,750.80원까지 상승했습니다.',
+        logo: 'media/logo.png',
+        category: ''
+    }
+];
+
+window.addEventListener('DOMContentLoaded', function() {
+    // 汇率区块点击事件
+    const fxRows = document.querySelectorAll('#fx-list tr');
+    fxRows.forEach((tr, idx) => {
+        tr.addEventListener('click', function() {
+            showDetail(fxDetails[idx]);
+            // 隐藏左/右侧边栏
+            const left = document.querySelector('.sidebar-left');
+            const right = document.querySelector('.sidebar-right');
+            if(left) left.classList.add('hide');
+            if(right) right.classList.add('hide');
+            // 返回按钮恢复左右侧栏
+            setTimeout(() => {
+                const backBtn = document.getElementById('detail-back-btn');
+                if(backBtn) {
+                    backBtn.addEventListener('click', function() {
+                        if(left) left.classList.remove('hide');
+                        if(right) right.classList.remove('hide');
+                        // 恢复主内容区为新闻列表
+                        showNewsList('정치');
+                    });
+                }
+            }, 100);
+        });
+    });
+});
