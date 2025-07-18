@@ -113,6 +113,7 @@
                 <!-- JS로 채움 -->
             </div>
             <!-- <button class="more-btn">헤드라인 더보기 ▼</button> -->
+            <button id="close-btn"  class="close-btn">Close</button>
         </section>
         <!-- 详情页模板，隐藏 -->
         <template id="detail-template">
@@ -142,7 +143,7 @@
                     <div class="detail-content" id="detail-content">
                         뉴스 본문 내용이 이곳에 표시됩니다.
                     </div>
-                    <button class="back-btn" id="detail-back-btn" title="返回"><span class="icon">←</span></button>
+                    <button class="back-btn" id="detail-back-btn" title="返回"><span class="icon">← Back</span></button>
                 </div>
             </main>
         </template>
@@ -213,14 +214,16 @@
     <!-- 欢迎弹窗 -->
     <dialog id="welcome-dialog" style="padding:32px 50px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18);font-size:18px;text-align:center;">
         <!-- <div style="font-weight:bold;font-size:22px;margin-bottom:12px;">欢迎来到Y 뉴스演示站点</div> -->
-        <div style="margin-bottom:24px; font-size: 14px; text-align: center; line-height:1.6;" >이 버전은 테스트 버전으로, <br><br>
+        <div style="margin-bottom:24px; font-size: 14px; text-align: center; line-height:1.6;" >이 버전은 테스트 버전으로,<br><br>
 
-            사용자와 화면간의 거리가 40 Cm가 유지되어야 <br>
-            커서가 빔레이저처럼 작동합니다. <br><br>
-            
-            거리와 상관없이 <br>
-            커서가 쳐다보는 위치로 움직이는 버전은 <br>
-            개발진행 중에 있습니다. </div>
+            사용자와 화면간의 거리가 40 Cm가 유지되어야<br>
+[커서]가 레이저빔처럼 작동합니다.<br><br>
+
+거리와 상관없이<br>
+[커서]가 레이저빔처럼 작동해서,<br>
+앱을 쳐다보기만 하면 원하는 기능이 작동하는 버전은<br>
+현재 개발중에 있습니다. 
+ </div>
         <button id="startAndStop" style="background:#3563b6;color:#fff;border:none;border-radius:4px;padding:15px 122px;font-size:16px;cursor:pointer;">Start</button>
     </dialog>
     <script src="media/main.js"></script>
@@ -242,6 +245,11 @@
                 const closeBtn = document.getElementById('startAndStop');
                 if(closeBtn) closeBtn.onclick = () => dlg.close();
             }
+            // 关闭按钮跳转
+            const closeBtn2 = document.getElementById('close-btn');
+            if(closeBtn2) closeBtn2.onclick = function() {
+                window.location.href = 'https://www.nineft.com/';
+            };
         });
     </script>
     <div id="mCircle"></div>

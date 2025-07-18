@@ -691,7 +691,7 @@ function showDetail(detail) {
         let arrow = isUp ? '▲' : '▼';
         // 布局
         mainContent.innerHTML = `
-        <div style="max-width:820px;margin:48px auto 0 auto;padding:32px 32px 28px 32px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);text-align:left;">
+        <div style="width:100%;margin:48px auto 0 auto;padding:0;background:transparent;border-radius:0;box-shadow:none;text-align:left;">
             <img src="media/hlxq.png" alt="환율详情" style="width:100%;border-radius:6px;margin-bottom:18px;" />
             <div style="font-size:19px;font-weight:700;margin-bottom:6px;">${fxName}</div>
             <div style="font-size:38px;font-weight:900;letter-spacing:1px;line-height:1.1;">${fxPrice}</div>
@@ -703,7 +703,7 @@ function showDetail(detail) {
                 <span style="display:inline-block;width:7px;height:7px;background:#1ec800;border-radius:50%;margin-right:2px;"></span>
                 <span>실시간</span>
             </div>
-            <button class="back-btn" id="detail-back-btn" style="margin-top:32px;"><span class="icon">←</span></button>
+            <button class="back-btn" id="detail-back-btn" style="margin-top:32px;"><span class="icon">← Back</span></button>
         </div>
         `;
         // 返回按钮事件
@@ -763,13 +763,24 @@ function showDetail(detail) {
 // 单页：渲染新闻列表
 function showNewsList(category) {
     const mainContent = document.getElementById('main-content');
-    mainContent.innerHTML = `<div id="news-list"></div>`;
+    mainContent.innerHTML = `
+        <div id="news-list"></div>
+        <button id="close-btn" class="close-btn">←  시연종료</button>
+    `;
     // 恢复左右侧边栏可见
     const left = document.querySelector('.sidebar-left');
     const right = document.querySelector('.sidebar-right');
     if(left) left.classList.remove('hide');
     if(right) right.classList.remove('hide');
     renderNews(newsData[category] || newsData['정치']);
+
+    // 绑定关闭按钮事件
+    const closeBtn = document.getElementById('close-btn');
+    if(closeBtn) {
+        closeBtn.onclick = function() {
+            window.location.href = 'https://www.nineft.com/';
+        };
+    }
 }
 
 // 默认渲染"정치"新闻
@@ -865,7 +876,7 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">10.51배 <span class="stock-detail-per-up">+0.76%</span></div>
                 </div>
             </div>
-            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">←</span></button>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">← Back</span></button>
         </div>
         `;
     } else if(stock.name === 'LG화학') {
@@ -913,7 +924,7 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">15.23배 <span class="stock-detail-per-up">-0.12%</span></div>
                 </div>
             </div>
-            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">←</span></button>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">← Back</span></button>
         </div>
         `;
     } else if(stock.name === '카카오') {
@@ -961,7 +972,7 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">22.10배 <span class="stock-detail-per-up">+0.21%</span></div>
                 </div>
             </div>
-            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">←</span></button>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">← Back</span></button>
         </div>
         `;
     } else if(stock.name === '현대차') {
@@ -1009,7 +1020,7 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">8.90배 <span class="stock-detail-per-up">+0.10%</span></div>
                 </div>
             </div>
-            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">←</span> </button>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">← Back</span> </button>
         </div>
         `;
     } else if(stock.name === 'SK하이닉스') {
@@ -1057,7 +1068,7 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">10.51배 <span class="stock-detail-per-up">+0.76%</span></div>
                 </div>
             </div>
-            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">←</span></button>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">← Back</span></button>
         </div>
         `;
     } else {
@@ -1202,18 +1213,20 @@ function setupMostViewedDetail() {
         li.addEventListener('click', function() {
             const detail = mostViewedDetails[idx];
             showDetail(detail);
-            // 隐藏左/右侧边栏
-            const left = document.querySelector('.sidebar-left');
-            const right = document.querySelector('.sidebar-right');
-            if(left) left.classList.add('hide');
-            if(right) right.classList.add('hide');
+            // 不再隐藏左/右侧边栏，保持显示
+            // const left = document.querySelector('.sidebar-left');
+            // const right = document.querySelector('.sidebar-right');
+            // if(left) left.classList.add('hide');
+            // if(right) right.classList.add('hide');
             // 返回按钮恢复左右侧栏
             setTimeout(() => {
                 const backBtn = document.getElementById('detail-back-btn');
                 if(backBtn) {
                     backBtn.addEventListener('click', function() {
-                        if(left) left.classList.remove('hide');
-                        if(right) right.classList.remove('hide');
+                        // const left = document.querySelector('.sidebar-left');
+                        // const right = document.querySelector('.sidebar-right');
+                        // if(left) left.classList.remove('hide');
+                        // if(right) right.classList.remove('hide');
                         // 恢复主内容区为新闻列表
                         showNewsList('정치');
                     });

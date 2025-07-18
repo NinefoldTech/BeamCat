@@ -3,6 +3,7 @@ body {
     font-family: "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
     background: #fff;
     color: #1e1e23;
+    overflow: hidden;
 }
 
 .topbar {
@@ -278,7 +279,7 @@ body {
 
 .stock-title {
     font-size: 16px;
-    margin: 18px 0 6px 0;
+    margin: 32px 0 6px 0;
     font-weight: bold;
 }
 
@@ -458,13 +459,17 @@ body {
 
 .detail-main {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* 左对齐 */
     background: #fff;
     min-height: 800px;
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .detail-container {
     width: 700px;
     margin: 32px 0;
+    padding-left: 0; /* 左padding为0，与logo左对齐 */
 }
 .detail-pressbar {
     display: flex;
@@ -604,14 +609,18 @@ body {
     background: #3563b6;
     color: #fff;
     border: none;
-    border-radius: 20px;
-    padding: 7px 42px;
-    font-size: 15px;
+    border-radius: 4px;
+    padding: 15px 122px;
+    font-size: 18px;
     cursor: pointer;
     transition: background 0.2s;
+    margin: 60px 30px 80px 120px;
 }
 .back-btn:hover {
-    background: #254080;
+    background: #3354a3;
+}
+.back-btn:active {
+    background: #29468b;
 }
 .detail-back-btn {
     width: 36px;
@@ -635,12 +644,12 @@ body {
 /* 股票详情页专属样式 */
 .stock-detail-wrap {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1080px;
     margin: 0 auto;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    padding: 32px 36px 32px 36px;
+    padding: 32px 0 32px 0; /* 左右padding为0，与logo左对齐 */
     min-height: 600px;
 }
 .stock-detail-header {
@@ -795,6 +804,27 @@ body {
     max-width: 1080px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.close-btn {
+  margin: 32px auto 0 auto;
+  display: block;
+  padding: 15px 122px;
+  font-size: 16px;
+  background: #3563b6;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 100px;
+}
+
+.close-btn:hover {
+    background:#3354a3;
+}
+
+.close-btn:active {
+    background:#29468b;
 }
 
 #mCircle {
