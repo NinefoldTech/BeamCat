@@ -191,7 +191,7 @@ body {
 }
 
 .sidebar-left {
-    min-width: 160px;
+    min-width: 180px;
     max-width: 160px;
     flex: 0 0 140px;
     padding: 16px 16px 0 0;
@@ -200,8 +200,8 @@ body {
 }
 
 .sidebar-right {
-    min-width: 280px;
-    max-width: 280px;
+    min-width: 260px;
+    max-width: 260px;
     flex: 0 0 280px;
     padding: 24px 16px 0 16px;
     border-left: 1px solid #e3e6ef;
@@ -614,7 +614,7 @@ body {
     font-size: 18px;
     cursor: pointer;
     transition: background 0.2s;
-    margin: 60px 30px 80px 120px;
+    margin: 10px 30px 80px 120px;
 }
 .back-btn:hover {
     background: #3354a3;
@@ -649,7 +649,7 @@ body {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    padding: 32px 0 32px 0; /* 左右padding为0，与logo左对齐 */
+    /* padding: 32px 0 32px 0; 左右padding为0，与logo左对齐 */
     min-height: 600px;
 }
 .stock-detail-header {
@@ -658,7 +658,7 @@ body {
     gap: 18px;
     font-size: 22px;
     font-weight: bold;
-    margin-bottom: 18px;
+    /* margin-bottom: 18px; */
     position: relative;
     min-height: 48px;
 }
@@ -702,7 +702,7 @@ body {
 .stock-detail-main-row {
     display: flex;
     gap: 36px;
-    margin-bottom: 18px;
+    /* margin-bottom: 18px; */
 }
 .stock-detail-main-left {
     flex: 2;
@@ -722,7 +722,7 @@ body {
     display: flex;
     align-items: flex-end;
     gap: 18px;
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
 }
 .stock-detail-price {
     font-size: 38px;
@@ -748,12 +748,12 @@ body {
     margin-bottom: 2px;
 }
 .stock-detail-chart {
-    margin-top: 18px;
-    margin-bottom: 8px;
+    /* margin-top: 18px; */
+    /* margin-bottom: 8px; */
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-    padding: 12px 8px 8px 8px;
+    /* padding: 12px 8px 8px 8px; */
 }
 .stock-detail-info-title {
     font-size: 17px;
