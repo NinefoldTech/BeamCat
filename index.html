@@ -230,13 +230,23 @@
     <script>
         // 顶部logo点击刷新并切换首页
         const logo = document.getElementById('logo-home');
-        if(logo){
-            logo.style.cursor = 'pointer';
-            logo.onclick = function(){
-                // 切换到首页（政治新闻）并刷新
-                window.location.href = window.location.pathname + '?category=정치';
-            };
+if(logo){
+    logo.style.cursor = 'pointer';
+    logo.onclick = function(e){
+        e.preventDefault();
+        // 切换到“정치”新闻，无需刷新
+        if(typeof showNewsList === 'function'){
+            showNewsList('정치');
         }
+        // 高亮“정치”栏目
+        const navLinks = document.querySelectorAll('.nav-inner a');
+        navLinks.forEach(link => {
+            if (link.textContent.trim() === '정치') {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
         // 自动弹出欢迎弹窗
         window.addEventListener('DOMContentLoaded', function() {
             const dlg = document.getElementById('welcome-dialog');
