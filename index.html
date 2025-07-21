@@ -247,6 +247,12 @@ if(logo){
                 link.classList.remove('active');
             }
         });
+        // 更新URL参数（不刷新页面）
+        const url = new URL(window.location);
+        url.searchParams.set('category', '정치');
+        window.history.replaceState({}, '', url);
+    };
+}
         // 自动弹出欢迎弹窗
         window.addEventListener('DOMContentLoaded', function() {
             const dlg = document.getElementById('welcome-dialog');
