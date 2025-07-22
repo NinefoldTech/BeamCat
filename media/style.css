@@ -52,6 +52,62 @@ body {
     letter-spacing: 1px;
 }
 
+.topbar-info-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#info-lightbox {
+    position: absolute;
+    /* top: 55px;  - Will be set by JS */
+    /* right: 20px; - Will be set by JS */
+    background-color: #fff;
+    border: 1px solid #e3e6ef;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    padding: 24px;
+    width: 320px;
+    z-index: 1001;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#info-lightbox p {
+    margin: 0 0 20px 0;
+}
+
+#info-lightbox-close {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #3563b6;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#info-lightbox-close:hover {
+    background-color: #254080;
+}
+
 .topbar-menu {
     font-size: 15px;
     color: #c7d2ee;
@@ -849,6 +905,20 @@ body {
     background: #29468b !important;
     color: #c7d2ee !important;
     transition: background 0.1s, color 0.1s;
+}
+
+#welcome-backdrop {
+    position: fixed;
+    z-index: 999;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    transition: opacity 0.3s;
+}
+
+#welcome-dialog {
+    top: calc(-6% - 50px);
 }
 
 @media (max-width: 1300px) {
