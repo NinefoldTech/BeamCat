@@ -57,19 +57,22 @@ body {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 30px;
-    height: 28px;
+    min-width: 64px;
+    height: 32px;
     background-color: #E53935;
-    /* border: 1px solid #fff; */
-    border-radius: 50%;
+    border: none;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ffffff;
-    font-weight: bold;
-    font-size: 16px;
+    font-weight: 400;
+    font-size: 15px;
     cursor: pointer;
-    padding-top: 2px;
+    padding: 0 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+    margin-left: 12px;
 }
 
 #info-lightbox {
