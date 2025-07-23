@@ -57,18 +57,19 @@ body {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 26px;
-    height: 26px;
-    background-color: transparent;
-    border: 1px solid #fff;
+    width: 30px;
+    height: 28px;
+    background-color: #E53935;
+    /* border: 1px solid #fff; */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-weight: 400;
+    color: #ffffff;
+    font-weight: bold;
     font-size: 16px;
     cursor: pointer;
+    padding-top: 2px;
 }
 
 #info-lightbox {
@@ -92,21 +93,37 @@ body {
 }
 
 #info-lightbox-close {
-    display: block;
+    /* display: block;
     width: 100%;
     padding: 10px;
     background-color: #3563b6;
     color: #fff;
     border: none;
     border-radius: 4px;
+    border: 1px solid #fff;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s; */
+    
+    color: #303038;
+    border: 1px solid #e6e6ea;
+    display: block;
+    width: 100%;
+    padding: 0 27px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 40px;
+    letter-spacing: -0.5px;
+    border-radius: 22px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    white-space: nowrap;
+    background: #ffffff;
 }
 
-#info-lightbox-close:hover {
+/* #info-lightbox-close:hover {
     background-color: #254080;
-}
+} */
 
 .topbar-menu {
     font-size: 15px;
@@ -660,24 +677,43 @@ body {
     background: #e3e6ef;
 }
 .back-btn {
-    display: inline-block;
-    margin-bottom: 18px;
-    background: #3563b6;
-    color: #fff;
-    border: none;
+    width: 100%;
+    max-width: 315px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 100px;
+    height: auto;
+    display: flex; /* 关键：用flex布局 */
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    padding: 9px 16px;
     border-radius: 4px;
-    padding: 15px 122px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
     font-size: 18px;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin: 10px 30px 80px 120px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #030000;
+    border: 1px solid #e6e6ea;
+    text-align: center;
 }
-.back-btn:hover {
+/* .back-btn:hover {
     background: #3354a3;
 }
 .back-btn:active {
     background: #29468b;
+} */
+
+.back-btn img {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+    margin-bottom: 2px;
+    /* display: inline-block;
+    vertical-align: middle; */
 }
+
 .detail-back-btn {
     width: 36px;
     height: 36px;
@@ -872,7 +908,11 @@ body {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 100px;
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .close-btn:hover {
@@ -881,6 +921,13 @@ body {
 
 .close-btn:active {
     background:#29468b;
+}
+
+.close-btn img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    margin-bottom: 2px;
 }
 
 #mCircle {
