@@ -703,7 +703,7 @@ function showDetail(detail) {
                 <span style="display:inline-block;width:7px;height:7px;background:#1ec800;border-radius:50%;margin-right:2px;"></span>
                 <span>실시간</span>
             </div>
-            <button class="back-btn" id="detail-back-btn" style="margin-top:32px;"><span class="icon">← Back</span></button>
+            <button class="back-btn" id="detail-back-btn" style="margin-top:32px;"><img src="media/arrow-left.svg" alt="back" >Back</button>
         </div>
         `;
         // 返回按钮事件
@@ -765,7 +765,7 @@ function showNewsList(category) {
     const mainContent = document.getElementById('main-content');
     mainContent.innerHTML = `
         <div id="news-list"></div>
-        <button id="close-btn" class="close-btn">←  시연종료</button>
+        <button id="close-btn" class="close-btn"><img src="media/nineft.svg" alt="nineft" >시연종료</button>
     `;
     // 恢复左右侧边栏可见
     const left = document.querySelector('.sidebar-left');
@@ -876,7 +876,7 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">10.51배 <span class="stock-detail-per-up">+0.76%</span></div>
                 </div>
             </div>
-            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">← Back</span></button>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><img src="media/arrow-left.svg" alt="back" >Back</span></button>
         </div>
         `;
     } else if(stock.name === 'LG화학') {
@@ -924,7 +924,7 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">15.23배 <span class="stock-detail-per-up">-0.12%</span></div>
                 </div>
             </div>
-            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">← Back</span></button>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><img src="media/arrow-left.svg" alt="back" >Back</button>
         </div>
         `;
     } else if(stock.name === '카카오') {
@@ -972,7 +972,7 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">22.10배 <span class="stock-detail-per-up">+0.21%</span></div>
                 </div>
             </div>
-            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">← Back</span></button>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><img src="media/arrow-left.svg" alt="back" >Back</button>
         </div>
         `;
     } else if(stock.name === '현대차') {
@@ -1020,7 +1020,7 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">8.90배 <span class="stock-detail-per-up">+0.10%</span></div>
                 </div>
             </div>
-            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">← Back</span> </button>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><img src="media/arrow-left.svg" alt="back" >Back</button>
         </div>
         `;
     } else if(stock.name === 'SK하이닉스') {
@@ -1068,7 +1068,7 @@ function showStockDetail(stock) {
                     <div class="stock-detail-per">10.51배 <span class="stock-detail-per-up">+0.76%</span></div>
                 </div>
             </div>
-            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><span class="icon">← Back</span></button>
+            <button class="back-btn" id="stock-detail-back-btn" title="返回" style="margin-top:32px;"><img src="media/arrow-left.svg" alt="back" >Back</button>
         </div>
         `;
     } else {
